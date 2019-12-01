@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+nums = File.open(ARGV.first).readlines.map &:to_i
+
+def p1(x)
+  (x / 3).floor - 2
+end
+
+def p2(x)
+  ret = 0
+
+  x = p1(x)
+  until x <= 0
+    ret += x
+    x = p1(x)
+  end
+
+  ret
+end
+
+puts lines.map(&:to_i).map { |x| p1 x }.sum
+puts lines.map(&:to_i).map { |x| p2 x }.sum
