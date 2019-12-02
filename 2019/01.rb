@@ -18,5 +18,5 @@ def p2(x)
   ret
 end
 
-puts lines.map{ |x| p1 x }.sum
-puts lines.map{ |x| p2 x }.sum
+puts lines.map { |x| p1 x }.sum
+puts lines.map { |x| p2 x }.sum
