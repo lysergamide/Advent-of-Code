@@ -1,31 +1,12 @@
 #!/usr/bin/env ruby
 
-def solve(tape, a, b)
-  t = tape.dup
-  t[1] = a
-  t[2] = b
-
-  i = 0
-  until t[i] == 99
-    x = t[i + 1]
-    y = t[i + 2]
-    z = t[i + 3]
-
-    case t[i]
-    when 1 then t[z] = t[x] + t[y]
-    when 2 then t[z] = t[x] * t[y]
-    end
-
-    i += 4
-  end
-
-  t[0]
-end
+require "./machine.rb"
 
 tape = File.read(ARGV.first).chomp.split(",").map &:to_i
+cpu = Machine.new tape
 
-puts solve(tape, 12, 2)
+puts cpu.run(2, 12)
 
 (0..99).to_a.permutation(2)
-  .find { |a, b| solve(tape, a, b) == 19690720 }
+  .find { |a, b| cpu.run(a, b) == 19690720 }
   .tap { |a, b| puts a * 100 + b }
