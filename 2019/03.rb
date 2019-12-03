@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require "set"
-require "digest"
 
 def p1(x)
   cross = []
