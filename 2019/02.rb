@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "./machine.rb"
+require "./intcode.rb"
 
 tape = File.read(ARGV.first).chomp.split(",").map &:to_i
 cpu = Machine.new tape

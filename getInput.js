@@ -1,6 +1,6 @@
 const bar = require('cli-progress');
 const pup = require('puppeteer');
-const fs  = require('fs');
+const fs = require('fs');
 
 const url = 'https://adventofcode.com/';
 
@@ -12,11 +12,11 @@ async function saveDay(page, year, day) {
   }
 
   let fpath = `./${year}/input/${day_str}.txt`;
-  if (await !fs.existsSync(fpath)) {
+  if (!fs.existsSync(fpath)) {
     let input_url = `${url}${year}/day/${day}/input`;
     await page.goto(input_url)
     let text = await page.$eval('*', x => x.innerText);
-    await fs.writeFileSync(fpath, text);
+    fs.writeFileSync(fpath, text);
   }
 }
 
@@ -25,7 +25,7 @@ async function savePast(page) {
     {
       barCompleteChar: '#',
       barIncompleteChar: ' ',
-      format: '|previous years'+'||{bar}||'+ '{percentage}%|',
+      format: '|previous years' + '||{bar}||' + '{percentage}%|',
       fps: 5,
       stream: process.stdout,
       barsize: 30
@@ -44,12 +44,12 @@ async function savePast(page) {
   b.stop();
 }
 
-(async ()=> {
-  const cookie  = JSON.parse(await fs.readFileSync('cookie/cookies.json', 'utf8'));
+(async () => {
+  const cookie = JSON.parse(await fs.readFileSync('cookie/cookies.json', 'utf8'));
   const browser = await pup.launch();
-  const page    = await browser.newPage();
+  const page = await browser.newPage();
 
-  await page.setViewport({width: 1366, height: 768});
+  await page.setViewport({ width: 1366, height: 768 });
   await page.setCookie(...cookie).catch(e => console.log(e));
 
   await savePast(page);

@@ -2,8 +2,8 @@
 
 require "set"
 
-def p1(x)
-  cross = []
+# brute force
+def find_cross(x)
   watch = [Set.new, Set.new]
   steps = [Hash.new, Hash.new]
   wires = x.lines.map { |l| l.split(",") }
@@ -32,16 +32,12 @@ def p1(x)
   traverse[wires[1], watch[1], steps[1]]
 
   cross = watch.inject(&:&)
-  puts cross.map { |arr| arr.sum(&:abs) }.min
-  puts cross.to_a.map { |arr| steps[0][arr] + steps[1][arr] }.min
-end
+  ret1  = cross.map { |arr| arr.sum(&:abs) }.min
+  ret2  = cross.to_a.map { |arr| steps[0][arr] + steps[1][arr] }.min
 
-def p2(x)
-  ret = x
-
-  ret
+  return [ret1, ret2]
 end
 
 slurp = File.read(ARGV.first).chomp
 
-puts p1(slurp)
+puts find_cross(slurp)
