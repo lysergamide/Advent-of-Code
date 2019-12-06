@@ -4,68 +4,102 @@
 
 require "set"
 
-class Machine
-  # class for parameters because why not
-  class Param
-    attr_accessor :val, :mode
-
-    def initialize(tape)
-      @val = 0
-      @mode = false
-      @tape = tape
-    end
-
-    def clear
-      @val = 0
-      @mode = false
-    end
-
-    def get; mode ? val : @tape[val]; end
-    def +(par); self.get + par.get; end
-    def *(par); self.get * par.get; end
-    def <(par); self.get < par.get; end
-    def ==(par); self.get == par.get; end
-    def zero?; self.get.zero?; end
-    def puts; puts @val; end
-  end
+class Param
+  attr_accessor :val, :mode
 
   def initialize(tape)
-    @tape = tape.dup
-    @pc = 0
+    @val = 0
+    @immediate = false
+    @tape = tape
+  end
+
+  def clear
+    @val = 0
+    @mode = true
+  end
+
+  def get; @immediate ? val : @tape[val]; end
+  def +(par); self.get + par.get; end
+  def *(par); self.get * par.get; end
+  def <(par); self.get < par.get; end
+  def ==(par); self.get == par.get; end
+  def zero?; self.get.zero?; end
+  def print; puts @val; end
+end
+
+class Tape
+  def initialize(t)
+    @vals = t.dup
+  end
+
+  def [](par)
+    if par.is_a?(Param)
+      @vals[par.get]
+    else
+      @vals[par]
+    end
+  end
+
+  def []=(par, val)
+    if par.is_a?(Param)
+      @vals[par.get] = val
+    else
+      @vals[par] = val
+    end
+  end
+end
+
+class Machine
+  # class for parameters because why not
+
+  def initialize(t, dbg = false)
+    @tape = Tape.new t
+    @sp = 0
     @opcode = 0
     @fst = Param.new @tape
     @snd = Param.new @tape
     @thd = Param.new @tape
+    @dbg = dbg
+  end
+
+  def debug
+    puts "Bytes: #{@tape[@sp]}; SP: #{@sp} : OP: #{@opcode}
+" \
+         "fst: #{[@fst.get, @fst.mode ? "immediate" : "position"].to_s}
+" \
+         "snd: #{[@snd.get, @snd.mode ? "immediate" : "position"].to_s}
+" \
+         "thd: #{[@thd.get, @thd.mode ? "immediate" : "position"].to_s}"
   end
 
   def opcycle
-    puts "called"
+    self.debug if @dbg
     case @opcode
     when 1 #add
-      @thd.val = @fst + @snd
-      @pc += 4
+      @tape[@thd] = @fst + @snd
+      @sp += 4
     when 2 #mul
-      @thd.val = @fast * @snd
-      @pc += 4
+      @tape[@thd] = @fast * @snd
+      @sp += 4
     when 3 #gets
-      @thd.val = $stdin.gets.to_i
-      @pc += 2
+      @tape[@thd] = $stdin.gets.to_i
+      @sp += 2
     when 4 #puts
-      @thd.puts
-      @pc += 2
+      @thd.print
+      @sp += 2
     when 5 #jmp
-      @pc = !@fst.zero? ? @snd.get : 3 + @pc
+      @sp = !@fst.zero? ? @snd.get : 3 + @sp
     when 6 #njmp
-      @pc = @fst.zero? ? @snd.get : 3 + @pc
+      @sp = @fst.zero? ? @snd.get : 3 + @sp
     when 7 #less
-      t[z] = @fst < @snd ? 1 : 0
-      @pc += 4
+      @tap[@thd] = @fst < @snd ? 1 : 0
+      @sp += 4
     when 8 #eq
-      t[z] = @fst == @snd ? 1 : 0
-      @pc += 4
+      @tape[@thd] = @fst == @snd ? 1 : 0
+      @sp += 4
     else
       puts "BAD OP #{@opcode}"
-      $stdin.gets
+      $stdin.gets if @dbg
     end
   end
 
@@ -73,18 +107,17 @@ class Machine
     @tape[1] = a if !a.nil?
     @tape[2] = b if !b.nil?
 
-    @pc = 0
-    until @tape[@pc] == 99
-      @fst.mode = (@tape[@pc] % 1000) > 99
-      @snd.mode = @tape[@pc] >= 1000
+    @sp = 0
+    until @tape[@sp] == 99
+      @fst.mode = (@tape[@sp] % 1000) > 99
+      @snd.mode = @tape[@sp] >= 1000
 
-      @opcode = @tape[@pc] % 100
-      @fst.val = @tape[@pc + 1]
-      @snd.val = @tape[@pc + 2]
-      @thd.val = @tape[@pc + 3]
+      @opcode = @tape[@sp] % 100
+      @fst.val = @tape[@sp + 1]
+      @snd.val = @tape[@sp + 2]
+      @thd.val = @tape[@sp + 3]
 
       self.opcycle
-      puts @opcode
     end
 
     @tape[0]
