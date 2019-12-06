@@ -18,19 +18,23 @@ class Param
     @mode = true
   end
 
-  def get; @immediate ? val : @tape[val]; end
-  def +(par); self.get + par.get; end
+  def get; !@immediate ? val : @tape[val]; end
+  def +(par); res = self.get + par.get; puts res; res; end
+  def -(par); self.get - par.get; end
   def *(par); self.get * par.get; end
+  def /(par); self.get / par.get; end
   def <(par); self.get < par.get; end
   def ==(par); self.get == par.get; end
   def zero?; self.get.zero?; end
-  def print; puts @val; end
+  def to_s; [@val, @immediate].to_s; end
 end
 
 class Tape
   def initialize(t)
     @vals = t.dup
   end
+
+  def to_s; @vals.to_s; end
 
   def [](par)
     if par.is_a?(Param)
@@ -42,7 +46,10 @@ class Tape
 
   def []=(par, val)
     if par.is_a?(Param)
+      puts par.to_s
+      print @vals[par.get].to_s + " -> "
       @vals[par.get] = val
+      puts @vals[par.get].to_s
     else
       @vals[par] = val
     end
@@ -76,7 +83,7 @@ class Machine
     self.debug if @dbg
     case @opcode
     when 1 #add
-      @tape[@thd] = @fst + @snd
+      @tape[@thd.get] = @fst + @snd
       @sp += 4
     when 2 #mul
       @tape[@thd] = @fast * @snd
@@ -85,7 +92,7 @@ class Machine
       @tape[@thd] = $stdin.gets.to_i
       @sp += 2
     when 4 #puts
-      @thd.print
+      puts @thd.to_s
       @sp += 2
     when 5 #jmp
       @sp = !@fst.zero? ? @snd.get : 3 + @sp
@@ -99,7 +106,16 @@ class Machine
       @sp += 4
     else
       puts "BAD OP #{@opcode}"
-      $stdin.gets if @dbg
+      if @dbg
+        inp = $stdin.gets.chomp
+        until inp == "q"
+          case inp
+          when "p" then puts @tape.to_s
+          when "q!" then exit
+          end
+          inp = $stdin.gets.chomp
+        end
+      end
     end
   end
 

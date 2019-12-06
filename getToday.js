@@ -1,19 +1,29 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const url = 'https://adventofcode.com/';
+const fs    = require('fs');
+const pup   = require('puppeteer');
+const sleep = require('util').promisify(setTimeout);
+const url   = 'https://adventofcode.com/';
 
 const date = new Date();
 const year = date.getFullYear();
 
-async function saveInput(page) {}
+function msToTime(duration) {
+    const hrs = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    const min = Math.floor((duration / (1000 * 60)) % 60);
+    const sec = Math.floor((duration / 1000) % 60);
 
-function clock(time) {}
+    const hours   = (hrs < 10) ? "0" + hrs : hrs;
+    const minutes = (min < 10) ? "0" + min : min;
+    const seconds = (sec < 10) ? "0" + sec : sec;
+
+    return hours + ":" + minutes + ":" + seconds + ".";
+}
 
 (async () => {
-    const cookie = JSON.parse(await fs.readFileSync('cookie/cookies.json', 'utf8'));
+    const cookie  = JSON.parse(await fs.readFileSync('cookie/cookies.json', 'utf8'));
     const browser = await pup.launch();
-    const page = await browser.newPage();
+    const page    = await browser.newPage();
 
     await page.setViewport({
         width: 1366,
@@ -21,14 +31,31 @@ function clock(time) {}
     });
     await page.setCookie(...cookie).catch(e => console.log(e));
 
-    await browser.close();
-});
+    let startTime = new Date();
+    startTime.setHours(21);
+    startTime.setMinutes(0);
+    startTime.setSeconds(1);
 
-var i = 0; // dots counter
-setInterval(function() {
-    process.stdout.clearLine(); // clear current text
-    process.stdout.cursorTo(0); // move cursor to beginning of line
-    i = (i + 1) % 4;
-    var dots = new Array(i + 1).join(".");
-    process.stdout.write("Waiting" + dots); // write text
-}, 300);
+    const year = startTime.getFullYear();
+    const day  = startTime.getDate();
+
+    let timer =
+        setInterval(function() {
+            const waitTime = (msToTime(startTime - new Date()));
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+            process.stdout.write(`getting input in: ${waitTime}`);
+        }, 1000);
+
+    await sleep(async () => {
+        clearInterval(timer);
+        const inputUrl = `${url}${year}/day/${day}/input`;
+        const fpath    = `./${year}/input/${day_str}.txt`;
+
+        await page.goto(inputUrl);
+        const input = await page.$eval('*', x => x.innerText);
+        fs.writeFileSync(fpath, text);
+    }, startTime - new Date());
+
+    await browser.close();
+})();

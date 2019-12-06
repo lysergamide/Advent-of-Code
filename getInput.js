@@ -1,6 +1,6 @@
 const bar = require('cli-progress');
 const pup = require('puppeteer');
-const fs = require('fs');
+const fs  = require('fs');
 
 const url = 'https://adventofcode.com/';
 
@@ -43,9 +43,9 @@ async function savePast(page) {
 }
 
 (async () => {
-    const cookie = JSON.parse(await fs.readFileSync('cookie/cookies.json', 'utf8'));
+    const cookie  = JSON.parse(await fs.readFileSync('cookie/cookies.json', 'utf8'));
     const browser = await pup.launch();
-    const page = await browser.newPage();
+    const page    = await browser.newPage();
 
     await page.setViewport({
         width: 1366,
