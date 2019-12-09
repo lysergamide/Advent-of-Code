@@ -1,9 +1,17 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "./intcode.rb"
+require "./intcode/intcode.rb"
 
-slurp = File.read(ARGV.first)
-tape = slurp.split(",").map(&:to_i)
-cpu = Machine.new(tape, true)
-cpu.run
+tape =
+  File.read(ARGV.first)
+      .split(",")
+      .map(&:to_i)
+
+[1, 5].each do |i|
+  machine = Interpreter.new(tape)
+  machine.input << i
+  machine.run
+
+  puts machine.output.last
+end

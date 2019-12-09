@@ -1,23 +1,23 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-nums = File.readlines(ARGV.first).map &:to_i
+lines = File.readlines(ARGV.first).map(&:to_i)
 
-def p1(x)
-  x / 3 - 2
+def p1(num)
+  num / 3 - 2
 end
 
-def p2(x)
+def p2(num)
   ret = 0
 
-  x = p1(x)
-  until x <= 0
-    ret += x
-    x = p1(x)
+  num = p1(num)
+  until num <= 0
+    ret += num
+    num = p1(num)
   end
 
   ret
 end
 
-puts lines.map { |x| p1 x }.sum
-puts lines.map { |x| p2 x }.sum
+puts(lines.sum { |x| p1(x) })
+puts(lines.sum { |x| p2(x) })

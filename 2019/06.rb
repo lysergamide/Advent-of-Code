@@ -3,68 +3,50 @@
 
 require "set"
 
-class Planet < Array
-  def count_orbit(x = 0)
-    return x if self[1].empty?
-    x + self[1].sum { |child| child.count_orbit(x + 1) }
+class Graph
+  attr_accessor :edges
+
+  def initialize
+    @edges = Hash.new { |h, k| h[k] = [] }
   end
 
-  def find_path(target, path = Array.new)
-    return nil if self[1].empty?
-    path << self[0]
-    return path if self[1].any? { |a| a.first == target }
-
-    self[1].map { |child| child.find_path(target, path.dup) }
-      .compact
-      .first
+  def [](val)
+    @edges[val]
   end
 
-  def fetch(target)
-    return self if self[0] == target
-    return nil if self[1].empty?
-    self[1].map { |child| child.fetch(target) }
-      .compact
-      .first
+  # Dijkstra's
+  def path_tree(source)
+    unvisited = @edges.each_key.to_set
+    tree      = Hash.new { |h, k| h[k] = Float::INFINITY }
+
+    tree[source] = 0
+    until unvisited.empty?
+      current = unvisited.each.min_by { |v| tree[v] }
+      @edges[current].each do |child|
+        tree[child] = [tree[child], tree[current] + 1].min
+      end
+      unvisited.delete(current)
+    end
+
+    tree
   end
 
-  def dist(target, x = -1)
-    return x if target == self[0]
-    return nil if self[1].empty?
-
-    self[1].map { |child| child.dist(target, x + 1) }
-      .compact
-      .first
-  end
-end
-
-lines = File.readlines(ARGV.first)
-root = Planet["COM)", []]
-
-stack = [root]
-until stack.empty?
-  parent, ls = stack.pop
-
-  lines.select { |ln| ln[/^.*\)/] == parent }.each do |child|
-    child.gsub(/.*\)/, "").chomp.tap { |x|
-      planet = Planet["#{x})", []]
-      ls << planet
-      stack << planet
-    }
+  def shortest_path(source, target)
+    self.path_tree(source)[target]
   end
 end
 
-puts root.count_orbit
-you = "YOU)"
-san = "SAN)"
-ypath = root.find_path(you)
-spath = root.find_path(san)
-length = [ypath.size, spath.size].min - 1
+lines  = File.read(ARGV.first).chomp.lines
+system = Graph.new
 
-connection_name =
-  ypath.slice(0, length).reverse
-    .zip(spath.slice(0, length).reverse)
-    .detect { |a| a[0] == a[1] }
-    .first
+lines.each do |line|
+  parent, child = line.chomp.split(")")
+  system[parent] << child
+  system[child] << parent
+end
 
-connection = root.fetch(connection_name)
-puts [you, san].sum { |x| connection.dist(x) }
+puts system.path_tree("COM")
+           .each_value
+           .sum
+
+puts system.shortest_path("YOU", "SAN") - 2
