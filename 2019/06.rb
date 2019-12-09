@@ -7,7 +7,7 @@ class Graph
   attr_accessor :edges
 
   def initialize
-    @edges = Hash.new { |h, k| h[k] = [] }
+    @edges = Hash.new { |h, k| h[k] = Array.new }
   end
 
   def [](val)
@@ -21,7 +21,9 @@ class Graph
 
     tree[source] = 0
     until unvisited.empty?
-      current = unvisited.each.min_by { |v| tree[v] }
+      current = unvisited.each
+                         .min_by { |v| tree[v] }
+
       @edges[current].each do |child|
         tree[child] = [tree[child], tree[current] + 1].min
       end
@@ -36,11 +38,15 @@ class Graph
   end
 end
 
-lines  = File.read(ARGV.first).chomp.lines
+lines = File.read(ARGV.first)
+            .chomp
+            .lines
+            .map(&:chomp)
+
 system = Graph.new
 
 lines.each do |line|
-  parent, child = line.chomp.split(")")
+  parent, child = line.split(")")
   system[parent] << child
   system[child] << parent
 end

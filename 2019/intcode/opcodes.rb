@@ -20,7 +20,6 @@ class Interpreter
       @sp += 4
     when 3 # gets
       if @input.empty?
-        debug
         self[1] = $stdin.gets.to_i
       else
         self[1] = @input.shift
@@ -39,6 +38,9 @@ class Interpreter
     when 8 # eq
       self[3] = self[1] == self[2] ? 1 : 0
       @sp += 4
+    when 9
+      @base = @base + self[1]
+      @sp += 2
     when 99
       @done = true
     else
