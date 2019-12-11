@@ -1,17 +1,25 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "./intcode/intcode.rb"
+require './intcode/intcode.rb'
 
 tape =
   File.read(ARGV.first)
-      .split(",")
+      .split(',')
       .map(&:to_i)
 
-[1, 5].each do |i|
-  machine = Interpreter.new(tape)
-  machine.input << i
-  machine.run
+part1, part2 =
+  [1, 5].each do |i|
+    machine = Interpreter.new(tape)
+    machine.input << i
+    machine.run
 
-  puts machine.output.last
-end
+    machine.output.last
+  end
+
+puts(
+  "Day 05\n"   \
+  "------\n"   \
+  "Silver: #{part1}\n" \
+  "Gold:   #{part2}"
+)

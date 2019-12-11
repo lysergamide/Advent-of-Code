@@ -4,15 +4,15 @@
 PAD = [
   [1, 2, 3],
   [4, 5, 6],
-  [7, 8, 9],
+  [7, 8, 9]
 ].freeze
 
 PAD2 = [
   [nil, nil, 1, nil, nil],
   [nil, 2, 3, 4, nil],
   [5, 6, 7, 8, 9],
-  [nil, "A", "B", "C", nil],
-  [nil, nil, "D", nil, nil],
+  [nil, 'A', 'B', 'C', nil],
+  [nil, nil, 'D', nil, nil]
 ].freeze
 
 class Pair
@@ -42,10 +42,10 @@ class Pair
     x_max = @pad.size - x_offset - 1
 
     case dir
-    when "U" then @y -= @y > y_min ? 1 : 0
-    when "D" then @y += @y < y_max ? 1 : 0
-    when "L" then @x -= @x > x_min ? 1 : 0
-    when "R" then @x += @x < x_max ? 1 : 0
+    when 'U' then @y -= @y > y_min ? 1 : 0
+    when 'D' then @y += @y < y_max ? 1 : 0
+    when 'L' then @x -= @x > x_min ? 1 : 0
+    when 'R' then @x += @x < x_max ? 1 : 0
     end
   end
 end

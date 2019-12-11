@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # AoC 2019 intcode machine
-require "./intcode/debug.rb"
-require "./intcode/opcodes.rb"
+require './intcode/debug.rb'
+require './intcode/opcodes.rb'
 
 class Interpreter
   attr_accessor :done, :input, :output, :opcode, :tape
@@ -40,15 +40,14 @@ class Interpreter
     case @mode[i]
     when 0 then @tape[@tape[@sp + i]] = x
     when 2 then @tape[@tape[@sp + i] + @base] = x
-    else
     end
   end
 
   def run(a = nil, b = nil)
-    @tape[1] = a if !a.nil?
-    @tape[2] = b if !b.nil?
+    @tape[1] = a unless a.nil?
+    @tape[2] = b unless b.nil?
 
-    self.opcycle until @done
+    opcycle until @done
     @output.empty? ? @tape[0] : @output
   end
 end

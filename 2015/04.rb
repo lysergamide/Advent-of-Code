@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'digest'
 
@@ -6,7 +7,8 @@ input = File.read(ARGV.first).chomp
 
 [5, 6].each do |n|
   zeroes = '0' * n
-  (0 .. ).each do |x|
+
+  (0..).each do |x|
     digest = Digest::MD5.hexdigest(input + x.to_s)
 
     if digest.start_with? zeroes

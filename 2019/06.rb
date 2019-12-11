@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "set"
+require 'set'
 
 class Graph
   attr_accessor :edges
 
   def initialize
-    @edges = Hash.new { |h, k| h[k] = Array.new }
+    @edges = Hash.new { |h, k| h[k] = [] }
   end
 
   def [](val)
@@ -34,7 +34,7 @@ class Graph
   end
 
   def shortest_path(source, target)
-    self.path_tree(source)[target]
+    path_tree(source)[target]
   end
 end
 
@@ -46,13 +46,13 @@ lines = File.read(ARGV.first)
 system = Graph.new
 
 lines.each do |line|
-  parent, child = line.split(")")
+  parent, child = line.split(')')
   system[parent] << child
   system[child] << parent
 end
 
-puts system.path_tree("COM")
+puts system.path_tree('COM')
            .each_value
            .sum
 
-puts system.shortest_path("YOU", "SAN") - 2
+puts system.shortest_path('YOU', 'SAN') - 2

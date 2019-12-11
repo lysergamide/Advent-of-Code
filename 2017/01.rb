@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 str = File.read(ARGV.first).chomp
 
@@ -12,7 +13,6 @@ def solve(str, rot)
       0
     end
   end
-
 end
 
 puts solve(str, 1)

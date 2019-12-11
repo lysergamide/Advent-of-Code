@@ -1,26 +1,26 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "set"
+require 'set'
 
 NORTH = 0
-EAST = 1
+EAST  = 1
 SOUTH = 2
-WEST = 3
-MAX = 4
+WEST  = 3
+MAX   = 4
 
 class Walker
   attr_accessor :pos, :dir, :hq
 
   def initialize
-    @dir = NORTH
-    @pos = [0, 0]
+    @dir     = NORTH
+    @pos     = [0, 0]
     @visited = Set.new
-    @hq = nil
+    @hq      = nil
   end
 
   def move(ins)
-    @dir += ins[0] == "R" ? 1 : -1
+    @dir += ins[0] == 'R' ? 1 : -1
     @dir %= MAX
 
     mag = ins[1..-1].to_i
@@ -47,7 +47,7 @@ end
 input  = File.open(ARGV.first).read.chomp
 walker = Walker.new
 
-input.split(", ").each do |ins|
+input.split(', ').each do |ins|
   walker.move ins
 end
 

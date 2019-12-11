@@ -1,18 +1,22 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-lines = File.open(ARGV.first).readlines
-boxs = lines.map { |line| line.split("x").map(&:to_i) }
-surfs = boxs.map { |box| box.combination(2) }
+boxes = File.open(ARGV.first)
+            .readlines
+            .map { |line| line.split('x').map(&:to_i) }
 
-paper = surfs.map do |surfaces|
+surfs = boxes.map { |box| box.combination(2) }
+
+paper = surfs.sum do |surfaces|
   areas = surfaces.map { |s| s.inject(:*) }
   areas.sum * 2 + areas.min
-end.sum
+end
 
-ribbon = boxs.map do |box|
+ribbon = boxes.sum do |box|
   box.sort.take(2).sum * 2 + box.inject(:*)
-end.sum
+end
 
-puts paper
-puts ribbon
+puts 'Day 02'              \
+     '------a '            \
+     "Silver: #{paper}"    \
+     "Gold:   #{ribbon}"

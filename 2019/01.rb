@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-lines = File.readlines(ARGV.first).map(&:to_i)
+lines = File.readlines(ARGV.first)
+            .map(&:to_i)
 
 def p1(num)
   num / 3 - 2
@@ -19,5 +20,9 @@ def p2(num)
   ret
 end
 
-puts(lines.sum { |x| p1(x) })
-puts(lines.sum { |x| p2(x) })
+puts(
+  "Day 01\n"                     \
+  "--------\n"                   \
+  "#{lines.sum { |x| p1(x) }}\n" \
+  "#{lines.sum { |x| p2(x) }}"
+)
