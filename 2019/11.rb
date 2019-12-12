@@ -5,8 +5,15 @@ require 'set'
 require './intcode/intcode.rb'
 
 class Ord
-  attr_accessor :N, :E, :S, :W, :val
-  def initialize(x)
+  attr_accessor :val
+
+  North = 0
+  East  = 1
+  South = 2
+  West  = 3
+  MAX   = 4
+
+  def initialize(x: ORD::North)
     @val = x
   end
 
@@ -15,12 +22,67 @@ class Ord
     @val %= 4
   end
 
-  N   = 0
-  E   = 1
-  S   = 2
-  W   = 3
-  MAX = 4
 end
+
+class Pos < Array
+  def initialize(val: [0,0])
+    @val = val
+  end
+
+  def move(dir)
+    case dir
+    when ORD::North then self[0] -= 1
+    when ORD::East  then self[1] += 1
+    when ORD::South then self[0] += 1
+    when ORD::West  then self[1] -= 1
+    end
+  end
+end
+
+
+class Turtle
+  def initialize(tape)
+    @tape = tape
+  end
+
+  def draw(black: Set.new, white: Set.new)
+    dir = Ord.new
+    pos = Pos.new
+
+    until machine.done
+      machine.input[0] = white.include?(pos) ? 1 : 0
+      machine.opcycle
+
+      next if machine.output.empty?
+
+      out = machine.output.pop
+      if i.zero?
+        if out.zero?
+          black << pos.dup
+          white.delete(pos)
+        else
+          white << pos.dup
+          black.delete(pos)
+        end
+      else
+        direction.rot(out)
+
+        case direction.val
+        when 0 then pos[0] -= 1
+        when 1 then pos[1] += 1
+        when 2 then pos[0] += 1
+        when 3 then pos[1] -= 1
+        end
+      end
+
+      i += 1
+      i %= 2
+    end
+
+    [white, black]
+  end
+end
+
 
 def move(dir, arr)
 end
