@@ -72,9 +72,9 @@ def paint_canvas(white, black)
   min_x, max_x = (white + black).map(&:last).minmax
 
   paint_line =
-    lambda (line, y) do
+    lambda line, y do
       line.map
-          .with_index { |c, x| 
+          .with_index { |c, x|
             y -= min_y
             x -= min_x
             white.include?([y, x]) ? '██' : '░░'
