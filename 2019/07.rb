@@ -49,12 +49,13 @@ tape = File.read(ARGV.first)
             .map(&:to_i)
 
 part1, part2 =
-  [(0..4), (5..9)].each_with_iterator do |range, i|
-  range.to_a
-       .permutation(5)
-       .map { |nums| i.zero?
-              ? tape.run_phase(nums)
-              : tape.feed_back(nums) }
+  [(0..4).to_a, (5..9).to_a].each_with_index do |range, i|
+  range.permutation(5)
+       .map { |nums| i.zero? ?
+              Interpreter.new(tape).run_phase(nums) :
+              Interpreter.new(tape).feed_back(nums) 
+            }
+            .max
 end
 
 #puts (0..4).to_a

@@ -45,8 +45,8 @@ part2 = los.sort[199]
            .yield_self { |y, x| x * 100 + y }
 
 puts(
-  "Day 10\n"   \
-  "------\n"   \
+  "Day 10\n"           \
+  "------\n"           \
   "Silver: #{part1}\n" \
   "Gold:   #{part2}"
 )

@@ -15,7 +15,7 @@ part2 =
   (0..99).to_a
          .permutation(2)
          .find { |a, b| Interpreter.new(tape).run(a, b) == 19_690_720 }
-         .yield_self { |a, b| a * 100 + b }
+         .then { |a, b| a * 100 + b }
 
 puts(
   "Day 02\n"   \

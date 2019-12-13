@@ -9,7 +9,7 @@ tape =
       .map(&:to_i)
 
 part1, part2 =
-  [1, 5].each do |i|
+  [1, 5].map do |i|
     machine = Interpreter.new(tape)
     machine.input << i
     machine.run
