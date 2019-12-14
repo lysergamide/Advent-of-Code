@@ -8,18 +8,18 @@ tape = File.read(ARGV.first)
            .split(',')
            .map(&:to_i)
 
-part1 = Interpreter.new(tape, true)
+silver = Interpreter.new(tape, true)
                    .run(12, 2)
 
-part2 =
+gold =
   (0..99).to_a
          .permutation(2)
          .find { |a, b| Interpreter.new(tape).run(a, b) == 19_690_720 }
          .then { |a, b| a * 100 + b }
 
 puts(
-  "Day 02\n"   \
-  "------\n"   \
-  "#{part1}\n" \
-  "#{part2}"
+  "Day 02\n"       \
+  "======\n"       \
+  "✮: #{silver}\n" \
+  "★: #{gold}"
 )

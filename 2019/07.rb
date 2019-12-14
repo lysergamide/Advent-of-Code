@@ -48,15 +48,21 @@ tape = File.read(ARGV.first)
             .split(',')
             .map(&:to_i)
 
-part1, part2 =
-  [(0..4).to_a, (5..9).to_a].each_with_index do |range, i|
-  range.permutation(5)
-       .map { |nums| i.zero? ?
-              Interpreter.new(tape).run_phase(nums) :
-              Interpreter.new(tape).feed_back(nums) 
-            }
-            .max
+silver, gold =
+  [(0..4).to_a, (5..9).to_a]
+    .zip([method(:run_phase), method(:feed_back)]) do |range, fn|
+      range.to_a
+           .permutation(5)
+           .map(&fn) 
+           .max
 end
+
+puts(
+  "Day 07\n"       \
+  "======\n"       \
+  "✮: #{silver}\n" \
+  "★: #{gold}"
+)
 
 #puts (0..4).to_a
 #           .permutation(5)

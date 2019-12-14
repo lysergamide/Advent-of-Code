@@ -24,18 +24,28 @@ def traverse(wire)
       s += 1
     end
   end
+
+  [track, steps]
 end
 
-def find_cross(wires)
-  res   = wires.map{ |x| traverse(x) }
-  cross = watch.inject(&:&)
+def find_cross(w1, w2)
+  tracks, steps = traverse(w1).zip(traverse(w2))
 
-  ret1  = cross.map { |arr| arr.sum(&:abs) }.min
-  ret2  = cross.to_a.map { |arr| steps[0][arr] + steps[1][arr] }.min
+  cross  = tracks.inject(&:&)
+  silver = cross.map { |arr| arr.sum(&:abs) }.min
+  gold   = cross.to_a.map { |arr| steps[0][arr] + steps[1][arr] }.min
 
-  [ret1, ret2]
+  [silver, gold]
 end
 
-slurp = File.read(ARGV.first).chomp.lines.map{|s| s.split(',')}
+wires = File.readlines(ARGV.first)
+            .map { |s| s.split(',') }
 
-puts find_cross(slurp)
+silver, gold = find_cross(*wires)
+
+puts(
+  "Day 03\n"       \
+  "======\n"       \
+  "✮: #{silver}\n" \
+  "★: #{gold}"
+)

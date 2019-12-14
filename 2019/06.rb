@@ -51,8 +51,15 @@ lines.each do |line|
   system[child] << parent
 end
 
-puts system.path_tree('COM')
-           .each_value
-           .sum
+silver = system.path_tree('COM')
+               .each_value
+               .sum
 
-puts system.shortest_path('YOU', 'SAN') - 2
+gold = system.shortest_path('YOU', 'SAN') - 2
+
+puts(
+  "Day 06\n"       \
+  "======\n"       \
+  "✮: #{silver}\n" \
+  "★: #{gold}"
+)

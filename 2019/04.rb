@@ -17,20 +17,26 @@ class String
   def find_pwds
     lower, upper = split('-').map(&:to_i)
 
-    part1 = 0
-    part2 = 0
+    silver = 0
+    gold   = 0
 
     (lower..upper).each do |num|
-      res = num.pwd?
-      part1 += res[0] ? 1 : 0
-      part2 += res[1] ? 1 : 0
+      part1, part2 = num.pwd?
+      silver += part1 ? 1 : 0
+      gold   += part2 ? 1 : 0
     end
 
-    [part1, part2]
+    [silver, gold]
   end
 end
 
-puts 'Day 04:'
-puts File.read(ARGV.first)
-         .chomp
-         .find_pwds
+silver, gold = File.read(ARGV.first)
+                   .chomp
+                   .find_pwds
+
+puts(
+  "Day 04\n"       \
+  "======\n"       \
+  "✮: #{silver}\n" \
+  "★: #{gold}"
+)

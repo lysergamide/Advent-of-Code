@@ -20,9 +20,13 @@ def p2(num)
   ret
 end
 
+silver, gold = [method(:p1), method(:p2)].map { |fn|
+  lines.sum(&fn)
+}
+
 puts(
-  "Day 01\n"                     \
-  "--------\n"                   \
-  "#{lines.sum { |x| p1(x) }}\n" \
-  "#{lines.sum { |x| p2(x) }}"
+  "Day 01\n"       \
+  "======\n"       \
+  "✮: #{silver}\n" \
+  "★: #{gold}"
 )
