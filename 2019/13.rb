@@ -20,8 +20,6 @@ def fn(x)
     when 0 then pos[0]      = out
     when 1 then pos[1]      = out
     when 2 then screen[out] << pos.dup
-    else
-      puts "FUCKED UP"
     end
     
     i += 1
@@ -76,7 +74,7 @@ silver = fn(tape)[2].size
 gold   = fn2(tape)
 
 puts(
-  "Day 12\n"       \
+  "Day 13\n"       \
   "======\n"       \
   "✮: #{silver}\n" \
   "★: #{gold}"

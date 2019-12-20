@@ -7,17 +7,17 @@ tape = File.read(ARGV.first)
            .split(',')
            .map(&:to_i)
 
-part1, part2 =
-  [1, 2].each do |num|
+silver, gold =
+  [1, 2].map do |num|
     machine = Interpreter.new(tape)
     machine.input << num
     machine.run
-    puts machine.output.to_s
+    machine.output.first
   end
 
 puts(
-  "Day 09\n"   \
-  "------\n"   \
-  "Silver: #{part1}\n" \
-  "Gold:   #{part2}"
+  "Day 09\n"       \
+  "======\n"       \
+  "✮: #{silver}\n" \
+  "★: #{gold}"
 )

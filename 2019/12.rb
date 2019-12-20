@@ -57,6 +57,7 @@ end
 
 coords = File.readlines(ARGV.first)
              .map { |line| line.scan(/-?\d+/).map(&:to_i) }
+
 planets1 = coords.map{ |c| Planet.new(*c) }
 planets2 = coords.map{ |c| Planet.new(*c) }
 

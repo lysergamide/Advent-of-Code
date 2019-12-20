@@ -38,15 +38,15 @@ field =
       }
 
 pos, los = field.pos_los
-part1 = los.size
-part2 = los.sort[199]
-           .last
-           .min_by { |rock| pos.dist(rock) }
-           .yield_self { |y, x| x * 100 + y }
 
+silver = los.size
+gold   = los.sort[199]
+            .last
+            .min_by { |rock| pos.dist(rock) }
+            .then { |y, x| x * 100 + y }
 puts(
-  "Day 10\n"           \
-  "------\n"           \
-  "Silver: #{part1}\n" \
-  "Gold:   #{part2}"
+  "Day 10\n"       \
+  "======\n"       \
+  "✮: #{silver}\n" \
+  "★: #{gold}"
 )
