@@ -32,16 +32,12 @@ def solve(pad, moves, pos):
                     pos[1] += 1
 
         ret.append(pad[pos[0]][pos[1]])
-    return ret
-
-
-def toStr(arr):
-    return ''.join([f'{x:X}' for x in arr])
+    return ''.join([f'{x:X}' for x in ret])
 
 
 lines = [x.strip() for x in open("input/02.txt").readlines()]
-part1 = toStr(solve(pad, lines, [1, 1]))
-part2 = toStr(solve(pad2, lines, [2, 2]))
+part1 = solve(pad, lines, [1, 1])
+part2 = solve(pad2, lines, [2, 2])
 
 print(part1)
 print(part2)
