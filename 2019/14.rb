@@ -1,73 +1,34 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
+require "pp"
 
-lines  = File.readlines(ARGV.first)
+class Material
+  attr_accessor :name, :min_build, :mats
 
-class Elements
-  attr_accessor :name, :elems, :need, :min
-
-  def initialize(str, n)
-    @name  = str
-    @min   = n
-    @elems = []
-    @need  = []
-  end
-
-  def base?
-    return @elems == [["ORE"]]
-  end
-
-  def round(x)
-    (x.to_f / @min).ceil * @min
-  end
-
-  def need?(str)
-    @need[@elems.index(str)]
+  def initialize(str)
+    /^(?<mats>.*) => (?<min_build>\d+) (?<name>\w+)/ =~ str
+    @name = name
+    @min_build = min_build.to_i
+    @mats = mats.split(",")
+      .map { |mat| mat.strip.split.then { |x| [x[0].to_i, x[1]] } }
   end
 end
 
-formula = Hash.new
+lines = File.open("input/14.txt").readlines.map { |l| l.chomp }
+mat_graph = {}
 
-class String
-  def parse
-    n, x = self.split
-    [x, n.to_i]
-  end
+lines.each do |line|
+  m = Material.new(line)
+  mat_graph[m.name] = m.mats
 end
 
-elements = lines.map do |line|
-  input, output = line.chomp.split("=>")
-  name, out     = output.parse
-  quants        = input.split(",").map(&:parse)
-
-  elem = Element.new(name, out)
-
-  quants.each do |sname, sneed|
-    elem.elems << sname
-    elem.need  << sneed
-  end
-  formula[name] = elem
+#part 1
+need = {}
+stack = [[1, "FUEL"]]
+while stack
+  quant, name = stack.pop
+  mats = mat_graph[name].mats.map { |x| x[0] * quant }
 end
 
-def break_down(elems, target = "ORE")
-  stack = [[formula[target]], 1]]
-  bases = []
-
-  until stack.empty?
-    parent = stack.pop
-    parent.elements
-  end
-
-end
-
-silver = break_down(elements)
-gold   = nil
-
-puts(
-  "Day 14\n"       \
-  "======\n"       \
-  "✮: #{silver}\n" \
-  "★: #{gold}"
-)
+pp mat_graph

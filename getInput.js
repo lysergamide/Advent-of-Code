@@ -32,7 +32,7 @@ async function savePast(page) {
 
     b.start(25 * ((new Date().getFullYear()) - 2015), 0);
     let i = 0;
-    for (year = 2015; year < 2019; year++) {
+    for (year = 2015; year < 2020; year++) {
         for (day = 1; day <= 25; day++) {
             i++;
             b.update(i);
