@@ -1,6 +1,6 @@
 #include <algorithm>
-#include <cstdio>
 #include <fstream>
+#include <iostream>
 #include <iterator>
 #include <optional>
 #include <unordered_set>
@@ -8,6 +8,8 @@
 auto main() -> int
 {
     using namespace std;
+
+    constexpr auto YEAR = 2020;
 
     auto f    = ifstream("./input/01.txt");
     auto nums = unordered_set<int>{ istream_iterator<int>(f),
@@ -24,12 +26,12 @@ auto main() -> int
         return {};
     };
 
-    auto silver = *solver(2020);
+    auto silver = *solver(YEAR);
     auto gold   = [&]() {  // boomers seething
         for (const auto n : nums)
-            if (auto tmp = solver(2020 - n))
+            if (auto tmp = solver(YEAR - n))
                 return n * *tmp;
     }();
 
-    printf("%d\n%d\n", silver, gold);
+    cout << silver << '\n' << gold << '\n';
 }

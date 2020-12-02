@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require "set"
+require 'pp'
 
 NUMS = File.readlines("input/01.txt")
   .map(&:to_i)
