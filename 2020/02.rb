@@ -1,13 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-fp = "input/02.txt"
+fp = "input/02bigboy.txt"
 
-silver = 0
-gold = 0
+silver, gold = 0, 0
 
 File.readlines(fp, chomp: true).each do |line|
-  /(?<a>\d+)-(?<b>\d+) (?<c>\w+): (?<d>.*)/ =~ line
+  a, b, c, d = line.tr("-:", " ").split
   a = a.to_i
   b = b.to_i
   count = d.count c

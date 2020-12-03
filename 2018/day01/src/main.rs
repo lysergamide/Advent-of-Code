@@ -1,50 +1,21 @@
+const I: &str = include_str!("../01.txt");
 use std::collections::HashSet;
-use std::fs::*;
-use std::io::BufRead;
-use std::io::BufReader;
 
 fn main() {
-    let mut sum: i32 = 0;
-    let mut duplicate = 0;
-    let mut found = false;
+    let nums: Vec<i32> = I.lines().filter_map(|s| s.parse::<i32>().ok()).collect();
     let mut seen = HashSet::new();
+    let mut sum = 0;
 
-    let buffer = BufReader::new(File::open("01.txt").unwrap());
+    let silver: i32 = nums.iter().sum();
+    let gold = nums
+        .iter()
+        .cycle()
+        .find_map(|n| {
+            sum += n;
+            seen.replace(sum)
+        })
+        .unwrap();
 
-    buffer.lines().for_each(|num| {
-        let n = num.unwrap();
-        let sign = n.chars().nth(0).unwrap();
-        let val = n[1..].parse::<i32>().unwrap();
-
-        sum += if sign == '-' { -val } else { val };
-
-        if !found && seen.contains(&sum) {
-            duplicate = sum;
-            found = true;
-        } else if !found {
-            seen.insert(sum);
-        }
-    });
-
-    //    read_to_string("01.txt")
-    //        .unwrap()
-    //        .replace('\n', "")
-    //        .split(',')
-    //        .for_each(|num| {
-    //            println!("{}", num);
-    //            let sign = num.chars().nth(0).unwrap();
-    //            let val = num[1..].parse::<i32>().unwrap();
-    //
-    //            sum += if sign == '-' { -val } else { val };
-    //
-    //            if !found && seen.contains(&sum) {
-    //                duplicate = sum;
-    //                found = true;
-    //            } else if !found {
-    //                seen.insert(sum);
-    //            }
-    //        });
-
-    println!("{}", sum);
-    println!("{}", duplicate);
+    println!("{}", silver);
+    println!("{}", gold);
 }
