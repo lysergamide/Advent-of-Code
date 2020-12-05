@@ -26,7 +26,7 @@ def part2(entry)
       end
     when "hcl" then /^#[0-9a-f]{6}$/ =~ field
     when "ecl" then eye_colors.include? field
-    when "pid" then /^(\d{9})$/ =~ field
+    when "pid" then /^\d{9}$/ =~ field
     when "cid" then true
     else false
     end
