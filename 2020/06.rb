@@ -18,3 +18,5 @@ puts(
 
 # golf 90 characters
 # $/="\n\n";p$<.map{_1.split.map &:chars}.then{|l|[:|,:&].map{|f|l.sum{ _1.reduce(f).size}}}
+# just part1/2 is 56 characters
+# $/="\n\n";p$<.sum{_1.split.map(&:chars).reduce(:&).size}
