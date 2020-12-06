@@ -12,5 +12,6 @@ puts(
   "✮: #{silver}\n" \
   "★: #{gold}"
 )
+
 # golf
 # p $<.read.split("\n\n").map { _1.split.map &:chars }.then { |l| [:|, :&].map { |f| l.sum{ _1.reduce(f).size } } }
