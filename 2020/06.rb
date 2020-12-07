@@ -10,7 +10,7 @@ silver = groups.sum { _1.reduce(:|).size }
 gold = groups.sum { _1.reduce(:&).size }
 
 puts(
-  "Day 05\n" \
+  "Day 06\n" \
   "==================\n" \
   "✮: #{silver}\n" \
   "★: #{gold}"
