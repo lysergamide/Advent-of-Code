@@ -9,11 +9,11 @@ auto main() -> int
 {
     using namespace std;
 
-    constexpr auto YEAR = 2020;
+    const auto YEAR = 2020;
 
     auto f    = ifstream("./input/01.txt");
-    auto nums = unordered_set<int>{ istream_iterator<int>(f),
-                                    istream_iterator<int>() };
+    auto nums = unordered_set<int> { istream_iterator<int>(f),
+                                     istream_iterator<int>() };
 
     const auto solver = [&](auto year) -> optional<int> {
         auto ret = find_if(begin(nums), end(nums), [&](const auto& x) {

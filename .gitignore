@@ -4,3 +4,4 @@ __pycache__
 debug/
 target/
 **/*.rs.bk
+Cargo.lock
