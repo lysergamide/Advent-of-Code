@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby -w
 # frozen_string_literal: true
 
-require "set"
-
 N = [0] + File.readlines("input/10.txt").map(&:to_i).sort.then { _1 + [_1.last + 3] }
 
 silver = [1, 3].map { |n| N.each_cons(2).count { _2 - _1 == n } }.reduce(&:*)
