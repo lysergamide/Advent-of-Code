@@ -41,7 +41,7 @@ File.readlines("input/14.txt").each do |line|
   end
 end
 
-puts("Day 13\n" \
+puts("Day 14\n" \
 "==================\n" \
 "✮: #{nums.each_value.sum}\n" \
 "★: #{nums2.each_value.sum}")
