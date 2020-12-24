@@ -44,7 +44,7 @@ def recombat(p1, p2)
   [win == p1, score(win)]
 end
 
-puts("Day 21\n" \
+puts("Day 22\n" \
 "==================\n" \
 "✮: #{combat(p1.dup, p2.dup)}\n" \
 "★: #{recombat(p1.dup, p2.dup).last}")
