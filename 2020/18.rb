@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby 
 # frozen_string_literal: true
 
 I = File.readlines("input/18.txt")

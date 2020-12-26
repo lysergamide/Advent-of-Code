@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby 
 # frozen_string_literal: true
 
 seats = File.readlines("input/05.txt").map { _1.tr("FBLR", "0101").to_i 2 }.sort

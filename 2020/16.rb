@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby 
 # frozen_string_literal: true
 
 RS, T, TS = File.read("input/16.txt").split(/.*ticket.*\n/).then do |rs, t, ts|

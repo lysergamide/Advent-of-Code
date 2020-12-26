@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby 
 # frozen_string_literal: true
 
 N, I = File.readlines("input/13.txt").then { |a, b|

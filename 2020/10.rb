@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby 
 # frozen_string_literal: true
 
 N = [0] + File.readlines("input/10.txt").map(&:to_i).sort.then { _1 << _1.last + 3 }

@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby 
 # frozen_string_literal: true
 
 I = File.readlines("input/12.txt").map { [_1[0], _1[1..].to_i] }

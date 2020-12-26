@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 MOD = 20201227

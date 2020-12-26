@@ -1,6 +1,5 @@
 use itertools::Itertools;
 use std::collections::HashMap;
-use std::collections::HashSet;
 const I: &str = include_str!("../02.txt");
 
 fn main() {
