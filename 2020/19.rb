@@ -1,11 +1,11 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 require "pp"
 
 R, S = File.read("input/19.txt")
-  .split("\n\n")
-  .map { _1.split("\n") }
-  .then { |rs, strs| [rs.map { _1.split(":").map(&:strip) }.to_h.freeze, strs.freeze] }
+           .split("\n\n")
+           .map { _1.split("\n") }
+           .then { |rs, strs| [rs.map { _1.split(":").map(&:strip) }.to_h.freeze, strs.freeze] }
 
 def solve(part2 = false)
   rules = R.to_a.map { [_1.dup, _2.dup] }.to_h

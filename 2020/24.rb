@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 ORDS = {
@@ -27,9 +27,11 @@ silver = sum(
   count = Hash.new { |h, k| h[k] = 0 }
 
   world.each_key.filter { world[_1] }.each do |pos|
-    ORDS.each_value
-        .map { add(_1, pos) }
-        .each { world[_1]; count[_1] += 1 }
+    ORDS.each_value do |dir|
+      neighbor = add(dir, pos)
+      world[neighbor]
+      count[neighbor] += 1
+    end
   end
 
   world.each_key do |k|

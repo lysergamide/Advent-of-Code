@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-fp = "input/02bigboy.txt"
+fp = "input/02.txt"
 
 silver, gold = 0, 0
 

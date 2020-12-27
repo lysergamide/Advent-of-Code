@@ -1,11 +1,11 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 N, I = File.readlines("input/13.txt").then { |a, b|
   [a.to_i, b.split(",")
-    .each_with_index
-    .reject { |a, | a == "x" }
-    .map { [_1.to_i, _2] }]
+            .each_with_index
+            .reject { |a, | a == "x" }
+            .map { [_1.to_i, _2] }]
 }
 
 def crm(n, a)
@@ -30,10 +30,9 @@ def mul_inv(a, b)
   x1
 end
 
-silver = I
-  .map(&:first)
-  .min_by { N % _1 }
-  .then { _1 * (_1 - (N % _1)) }
+silver = I.map(&:first)
+          .min_by { N % _1 }
+          .then { _1 * (_1 - (N % _1)) }
 gold = crm(I.map(&:first), I.map { -_1.last })
 
 puts(

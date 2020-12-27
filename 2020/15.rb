@@ -1,8 +1,12 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 require "pp"
 
-I = File.read("input/15.txt").split(",").each_with_index.map { [_1.to_i, _2 + 1] }.to_h
+I = File.read("input/15.txt")
+        .split(",")
+        .each_with_index
+        .map { [_1.to_i, _2 + 1] }
+        .to_h
 
 silver, gold = [2020, 30000000].map do |n|
   turns = I.clone

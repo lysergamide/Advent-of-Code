@@ -122,7 +122,9 @@ def solve(arr, n)
 end
 
 MIL = 1000000
-I = File.read("input/23.txt", chomp: true).chars.map(&:to_i)
+I = File.read("input/23.txt", chomp: true)
+        .chars
+        .map(&:to_i)
 
 silver = solve(I, 100).take(8).join
 gold = solve(I + (10..MIL).to_a, 10 * MIL).take(2).reduce(:*)
