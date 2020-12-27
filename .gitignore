@@ -5,3 +5,5 @@ debug/
 target/
 **/*.rs.bk
 Cargo.lock
+.clj-kondo
+.lsp
