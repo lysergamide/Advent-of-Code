@@ -1,15 +1,29 @@
-(require '[clojure.string :refer (split trim)])
-(require '[clojure.math.combinatorics :refer (combinations)])
+(require '[clojure.string :refer (split split-lines)])
+
+(defn combs [all n]
+  (let [[x & xs] all
+        size (count all)]
+    (cond (< size n) []
+          (= n 1) (map vector all)
+          :else (concat (map #(concat [x] %) (combs xs (dec n)))
+                        (combs xs n)))))
 
 (def boxes
-  (map (#(map int (split % "x")))
-       (split (trim (slurp "input/02.txt")) "\n")))
+  (map (fn [line] (map #(Integer. %) (split line #"x")))
+       (-> "input/02.txt" slurp split-lines)))
 
-(def surfs (map (#(combinations % 2) boxes)))
+(def surfaces (map #(combs % 2) boxes))
 
-(def paper
-  (reduce + (map (fn [surf]
-               (let [areas (map #(reduce * %) surf)]
-                 (+ (* 2 (reduce + areas))
-                    (min areas))))
-             surfs)))
+(defn paper-used [surfs]
+  (let [areas (map #(reduce * %) surfs)]
+    (+ (* 2 (reduce + areas))
+       (apply min areas))))
+
+(defn ribbon-needed [box]
+  (let [perim (->> box sort (take 2) (reduce +))]
+    (+ (* 2 perim)
+       (reduce * box))))
+
+(def silver (reduce + (map paper-used surfaces)))
+(def gold (reduce + (map ribbon-needed boxes)))
+(run! println [silver gold])
