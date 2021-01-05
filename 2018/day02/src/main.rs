@@ -1,5 +1,6 @@
 use itertools::Itertools;
 use std::collections::HashMap;
+
 const I: &str = include_str!("../02.txt");
 
 fn main() {
@@ -16,21 +17,26 @@ fn main() {
             trips += 1
         }
     }
-
-    let silver = dubs * trips;
-    let gold = I
+    let pair = I
         .lines()
         .combinations(2)
-        .find(|p| {
-            p[0].chars()
-                .zip(p[1].chars())
-                .filter(|(a, b)| a == b)
+        .find(|comb| {
+            comb[0]
+                .chars()
+                .zip(comb[1].chars())
+                .filter(|(a, b)| a != b)
                 .count()
                 == 1
         })
-        .and_then(|p| Some(p[0].chars().filter(|c| p[1].contains(c)).collect()))
         .unwrap();
 
-    println!("{}", silver);
-    println!("{}", gold);
+    let silver = dubs * trips;
+    let gold = pair[0]
+        .chars()
+        .zip(pair[1].chars())
+        .filter(|(a, b)| a == b)
+        .map(|x| x.0)
+        .collect::<String>();
+
+    println!("{}\n{}", silver, gold);
 }
