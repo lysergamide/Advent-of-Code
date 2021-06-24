@@ -8,3 +8,4 @@ Cargo.lock
 .clj-kondo
 .lsp
 .cpcache
+*.ps1
