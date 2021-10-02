@@ -3,7 +3,7 @@
 
 inst = []
 
-File.readlines("./input/06.txt").each do |line|
+File.readlines("./06.txt").each do |line|
   op = line[/(^toggle|^turn \w+)/]
 
   start, stop =

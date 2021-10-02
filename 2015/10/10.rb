@@ -19,10 +19,9 @@ def look_and_say(x)
   ret
 end
 
-input = File.read("./input/10.txt")
+input = File.read("10.txt")
             .strip
             .chars
-            .map &:to_i
 
 silver = 40.times { input = look_and_say input }.then { input.length }
 gold   = 10.times { input = look_and_say input }.then { input.length }

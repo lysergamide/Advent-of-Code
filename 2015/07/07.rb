@@ -20,7 +20,7 @@ end
 
 gates = Hash.new
 
-File.open("input/07.txt").each_line do |line|
+File.open("07.txt").each_line do |line|
   left, right  = line.chomp.split " -> "
   gates[right] = Gate.new(left)
 end

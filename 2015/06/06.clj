@@ -36,7 +36,7 @@
     (areduce grid i cnt 0 (+ cnt (aget grid i)))))
 
 (def instructions
-  (->> "input/06.txt"
+  (->> "06.txt"
        slurp
        split-lines
        (mapv parse)))
