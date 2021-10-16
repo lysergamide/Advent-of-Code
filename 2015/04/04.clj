@@ -9,7 +9,7 @@
        (BigInteger. 1)
        (format "%032x")))
 
-(def input (trim (slurp "input/04.txt")))
+(def input (trim (slurp "04.txt")))
 
 (defn solve [n]
   (let [zeroes (join (repeat n "0"))]

@@ -10,7 +10,7 @@
 
 (def boxes
   (map (fn [line] (map #(Integer. %) (split line #"x")))
-       (-> "input/02.txt" slurp split-lines)))
+       (-> "02.txt" slurp split-lines)))
 
 (def surfaces (map #(combs % 2) boxes))
 

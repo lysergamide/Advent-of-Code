@@ -5,7 +5,7 @@
           \v [-1, 0]
           \> [0, 1]
           \< [0, -1]})
-(def steps (->> "input/03.txt" slurp trim (map dir)))
+(def steps (->> "03.txt" slurp trim (map dir)))
 
 (defn solve [lst] (set (reductions #(map + %1 %2) lst)))
 
