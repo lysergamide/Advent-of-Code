@@ -8,7 +8,6 @@ BAD = "i o l".split.map { _1.ord - "a".ord }.to_set
 
 def good(pw)
   return false unless pw.each_cons(3).any? { |x| x.each_cons(2).all? { _1 + 1 == _2 } }
-  return false if pw.any? { BAD.include? _1 }
 
   /(.)\1.*([^\1])(\2)/ =~ pw.map { L[_1] }.join
 end
@@ -26,12 +25,13 @@ def generate(start)
       pw[i] %= L.size
       i -= 1
     end
+    pw[i] += 1 if BAD.include? pw[i]
 
     return pw.map { L[_1] }.join if good(pw)
   end
 end
 
-silver = generate(File.read("input/11.txt").strip)
+silver = generate(File.read("11.txt").strip)
 gold = generate(silver)
 
 puts("
