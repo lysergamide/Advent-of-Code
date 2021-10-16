@@ -26,4 +26,6 @@
 
 (def silver (reduce + (map paper-used surfaces)))
 (def gold (reduce + (map ribbon-needed boxes)))
+
+(println "Day 02\n======")
 (run! println [silver gold])

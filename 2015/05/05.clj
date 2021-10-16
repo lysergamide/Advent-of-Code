@@ -13,4 +13,5 @@
   (every? #(boolean (re-find % str))
           [#"(..).*\1"  #"(.).\1"]))
 
+(println "Day 05\n======")
 (run! println (map #(count (filter % lines)) [nice nice2]))

@@ -44,5 +44,7 @@
 
 (def silver (find-good I))
 (def gold (find-good (next-pass silver)))
+
+(println "Day 11\n======")
 (println (str "✮: " (to-s silver)))
 (println (str "★: " (to-s gold)))

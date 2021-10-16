@@ -16,4 +16,6 @@
     (first
      (filter #(starts-with? (md5 (str input %)) zeroes)
              (range)))))
+
+(println "Day 04\n======")
 (run! println (map solve [5, 6]))

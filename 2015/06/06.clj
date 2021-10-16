@@ -41,5 +41,6 @@
        split-lines
        (mapv parse)))
 
+(println "Day 06\n======")
 (println (solve instructions false))
 (println (solve instructions true))

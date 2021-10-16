@@ -44,5 +44,6 @@
        split-lines
        (map parse-line)))
 
+(println "Day 06\n======")
 (println (solve instructions true))
 (println (solve instructions false))

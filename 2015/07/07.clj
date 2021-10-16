@@ -43,5 +43,6 @@
       (assoc "b" (list nil silver))
       (solve "a")))
 
+(println "Day 07\n======")
 (println silver)
 (println gold)

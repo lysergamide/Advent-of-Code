@@ -12,4 +12,6 @@
 (def silver (count (solve steps)))
 (def gold (count (apply union (map #(solve (take-nth 2 %))
                                    [steps (rest steps)]))))
+
+(println "Day 03\n======")
 (run! println [silver gold])
