@@ -2,7 +2,7 @@
   '[clojure.string :as str :refer (split-lines split trim starts-with?)]
   '[clojure.set :refer (union)])
 
-(def input (-> "19.txt" slurp trim (split #"\n\n")))
+(def input (-> "19.txt" slurp trim (split #"\r?\n(\r?\n)+")))
 (def target (last input))
 
 (defn gather [pairs]
@@ -33,4 +33,4 @@
         (recur next-head next-tail (union ret substrs))))))
 
 (println (silver target))
-(println (greedy-search "e"))
+;; (println (greedy-search "e"))
