@@ -2,7 +2,6 @@
  '[clojure.string :as str]
  '[clojure.set :refer (union)])
 
-;;(def input (-> "19.txt" slurp str/trim (str/split #"\r?\n(\r?\n)+")))
 (def input (-> "19.txt" slurp str/trim (str/split #"\r?\n(\r?\n)+")))
 (def medicine (str/trim (last input)))
 
@@ -43,7 +42,6 @@
        (mapcat (fn [[x xs]] (for [y xs] [y x])))
        (sort-by (comp count first) #(compare %2 %1))))
 
-
 (defn possible-subs [current]
   (filter (fn [[x _]] (str/includes? current x)) transformations))
 
@@ -61,5 +59,6 @@
              (gold (str/replace-first current (re-pattern sub) replacement)
                    (inc i))))))
 
-(println (silver medicine))
-(println (gold medicine 0))
+(println "Day 19\n======")
+(println (str "✮: " (silver medicine)))
+(println (str "★: " (gold medicine 0)))
