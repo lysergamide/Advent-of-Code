@@ -1,5 +1,5 @@
 (require
-  '[clojure.string :refer (split-lines split trim)]
+  '[clojure.string :refer (split-lines)]
   '[clojure.set :refer (union)])
 
 (def size 100)
