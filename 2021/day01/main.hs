@@ -1,7 +1,5 @@
-import Data.List
-
 solve :: [Int] -> Int
-solve xs = length . filter (\(a, b) -> a < b) $ zip xs (tail xs)
+solve xs = length . filter (uncurry (<)) $ zip xs (tail xs)
 
 window :: Int -> [Int] -> [[Int]]
 window n [] = []
