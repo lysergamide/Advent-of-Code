@@ -7,5 +7,5 @@ end
 
 puts("Day 01\n"             \
      "==================\n" \
-     "✮: #{solve(Nums)}\n"   \
+     "✮: #{solve(Nums)}\n"  \
      "★: #{solve(Groups)}")
