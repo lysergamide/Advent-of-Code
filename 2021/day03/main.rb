@@ -1,36 +1,34 @@
 # frozen_string_literal: true
 
+I = File.readlines("input", chomp: true).map(&:chars)
+
 class Array
   def tmap(&b) = self.transpose.map(&b)
+  def to_int2 = self.join.to_i(2)
 
-  def freq(&block)
-    block ||= :last
+  def freq
+    ret = self.reduce(Hash.new(0)) { |h, k| h[k] += 1; h }
+              .minmax_by(&:last)
+              .transpose
 
-    self.reduce(Hash.new(0)) { |h, k| h[k] += 1; h }
-        .minmax_by(&block)
-        .transpose
+    ret[1].reduce(:==) ? ["0", "1"] : ret[0]
   end
 end
 
-def oxySolver(str, &cond)
+def gas_solver(&cond)
   I.each_index.reduce(I) do |nums, i|
-    return nums.first.to_i(2) if nums.size == 1
+    break nums.to_int2 if nums.size == 1
 
-    key, counts = nums.map { _1[i] }.freq(&cond)
-    key         = counts.reduce(:==) ? str : key.last
-
+    key = cond[nums.map{ _1[i] }.freq]
     nums.filter { _1[i] == key }
   end
 end
 
-I = File.readlines("input", chomp: true)
-
-Silver = I.map(&:chars)
-          .tmap { _1.freq.first }
-          .tmap { _1.join.to_i(2) }
+Silver = I.tmap { _1.freq }
+          .tmap { _1.to_int2 }
           .reduce :*
 
-Gold = oxySolver("1") * oxySolver("0"){ - _1.last }
+Gold = gas_solver(&:first) * gas_solver(&:last)
 
 puts "Day 03\n",
 "==================\n",
