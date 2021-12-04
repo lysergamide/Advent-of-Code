@@ -1,3 +1,6 @@
+# /user/bin/env ruby
+# frozen_string_literal: true
+
 Nums   = File.readlines("input", chomp: true).map(&:to_i)
 Groups = Nums.each_cons(3).map(&:sum)
 

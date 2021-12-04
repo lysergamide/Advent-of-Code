@@ -1,3 +1,4 @@
+# /user/bin/env ruby
 # frozen_string_literal: true
 
 I = File.readlines("input", chomp: true).map(&:chars)
