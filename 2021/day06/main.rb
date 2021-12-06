@@ -1,3 +1,6 @@
+# /user/bin/env ruby
+# frozen_string_literal: true
+
 I  = gets(nil).chomp
               .scan(/\d+/)
               .map(&:to_i)

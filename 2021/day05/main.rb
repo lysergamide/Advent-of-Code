@@ -1,3 +1,6 @@
+# /user/bin/env ruby
+# frozen_string_literal: true
+
 Pairs = gets(nil).lines.map do |line|
   line.scan(/\d+/).each_slice(2).map { Complex *_1 } 
 end
