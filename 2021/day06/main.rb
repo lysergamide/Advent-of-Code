@@ -7,7 +7,7 @@ I  = gets(nil).chomp
               .reduce(Array.new(9, 0)) { _1[_2] += 1; _1 }
 
 def step(fish)
-  Array.new(8, 0).tap do |f|
+  Array.new(9, 0).tap do |f|
     (0..7).each{ f[_1] += fish[_1 + 1] }
     f[8]  = fish[0]
     f[6] += fish[0]
