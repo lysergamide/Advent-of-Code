@@ -1,27 +1,24 @@
-Pairs = gets(nil).chomp
-                 .lines
-                 .map{ |x| x.split(" -> ")
-                            .map { Complex *_1.split(",").map(&:to_i) } }
-
-S, G = Pairs.reduce([Hash.new(0), Hash.new(0)]) do |hashes, pair|
-  hsilver, hgold = hashes
-  x, y = pair
-  dir  = y - x
-  dir  = Complex *(dir/dir.magnitude).rectangular.map(&:round) # normalize vector
-
-  until x == (y + dir)
-    hsilver[x] += 1 unless dir.magnitude > 1
-    hgold[x]   += 1
-
-    x += dir
-  end
-
-  [hsilver, hgold]
+Pairs = gets(nil).lines.map do |line|
+  line.scan(/\d+/).each_slice(2).map { Complex *_1 } 
 end
 
-def score(hash) = hash.values.count { _1 > 1 }
+Plane = Pairs.reduce(Hash.new(Complex(0))) do |plane, pair|
+  x, y = pair
+  dir  = y - x
+  dir  = Complex *(dir/dir.magnitude).rectangular.map(&:round)
+  step = dir.magnitude == 1 ? Complex(1) : Complex(0, 1)
 
-puts "Day 04\n",
+  until x == y + dir
+    plane[x] += step
+    x        += dir
+  end
+
+  plane
+end
+
+def overlap(&block) = Plane.values.count { block[_1] > 1 }
+
+puts "Day 05\n",
 "==================\n",
-"✮: #{score(S)}\n",
-"★: #{score(G)}"
+"✮: #{overlap &:real}\n",
+"★: #{overlap &:magnitude}"
