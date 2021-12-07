@@ -1,4 +1,4 @@
-Nums = $<.read.scan(/\d+/).map(&:to_i).
+Nums = $<.read.scan(/\d+/).map(&:to_i)
 
 def solve(&block)
   (0..Nums.max).map do |i|
