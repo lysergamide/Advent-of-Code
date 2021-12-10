@@ -15,4 +15,7 @@ Gold = I.map do |line|
   line.reverse.chars.reduce(0) { |sum, x| sum * 5 + GScore[x] }
 end.compact.sort.then{ _1[_1.size/2] }
 
-p Silver, Gold
+puts "Day 10\n",
+"==================\n",
+"✮: #{Silver}\n",
+"★: #{Gold}"
