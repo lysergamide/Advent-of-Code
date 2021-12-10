@@ -1,40 +1,31 @@
 require 'set'
 
-N = [Complex(1,0), Complex(-1,0), Complex(0,1), Complex(0,-1)]
-I = $<.read.strip.lines.map { _1.scan(/\d/).map(&:to_i) }
+I = $<.readlines(chomp: true)
+      .map { _1.scan(/\d/).map(&:to_i) }
 
-L = I.each_index
-     .to_a
-     .product(I[0].each_index.to_a)
-     .reduce(Hash.new(Float::INFINITY)) do |h, pos|
-        h[Complex(*pos)] = I[pos[0]][pos[1]]
-        h
-     end
-
-Low = L.keys.select { |pos| N.all?{ L[_1 + pos] > L[pos] } }
-p Low.map { L[_1] + 1 }.sum
-
-basins  = []
-#flooded = Set.new
-
-Low.each do |point|
-#  next if flooded.include? point
-  stack = [point]
-  basins << 0
-  color = Set.new
-  lel = []
-  until stack.empty?
-    x = stack.pop
-    color << x
-    lel << x
-#    flooded << x
-    basins[-1] += 1
-    N.map { _1 + x }
-     .reject {  L[_1] > 8 || color.include?(_1) }
-     .select { L[_1] > L[x] }
-     .each { stack << _1; color << _1 }
+Cave = Hash.new(Float::INFINITY).tap do |cave|
+  (0 ... I.size).each do |y|
+    (0 ... I[0].size).each do |x|
+      cave[Complex(x, y)] = I[y][x]
+    end
   end
-  p lel.map {L[_1]}.sort
 end
 
-p basins.sort[-3..].reduce :*
+def neighbors(x) = [1+0i, -1+0i, 0+1i, 0-1i].map{ x + _1 }
+
+def fillBasin(point, filled = Set.new)
+  return 0 if filled === point
+  neighbors(point).reject{ Cave[_1] > 8 || filled === _1 }
+                  .select{ Cave[_1] > Cave[point] }
+                  .map{ fillBasin(_1, filled << point) }
+                  .sum(1)
+end
+
+Low    = Cave.keys.select{ |x| neighbors(x).all?{ Cave[x] < Cave[_1] } }
+Silver = Low.sum{ Cave[_1] + 1 }
+Gold   = Low.map{ fillBasin _1 }.sort[-3..].reduce(&:*)
+
+puts "Day 09\n",
+"==================\n",
+"✮: #{Silver}\n",
+"★: #{Gold}"
