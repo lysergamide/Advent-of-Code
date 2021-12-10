@@ -4,7 +4,8 @@
 SScore = { ")" => 3, "]" => 57, "}" => 1197, ">" => 25137 }
 GScore = { "(" => 1, "[" => 2, "{" => 3, "<" => 4 }
 
-I = $<.readlines(chomp: true).map { while _1.gsub!(/(\(\)|\[\]|{}|<>)/, ""); end; _1 }
+I = $<.readlines(chomp: true)
+      .map { while _1.gsub!(/(\(\)|\[\]|{}|<>)/, ""); end; _1 }
 
 Silver = I.sum do |line|
   line.tr("#{GScore.keys.join}", "").chars.first.then{ SScore[_1] || 0 }
