@@ -14,7 +14,7 @@ A = Matrix.build(9, 9) { |r, c| ((r + 1) % 9) == c ? 1 : 0}
 
 def solve(x) = ((A**x) * Fish).to_a.flatten.sum
 
-puts "Day 05\n",
+puts "Day 06\n",
 "==================\n",
 "✮: #{solve(80)}\n",
 "★: #{solve(256)}"

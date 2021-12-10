@@ -9,7 +9,7 @@ def solve(&block)
   end.min
 end
 
-puts "Day 05\n",
+puts "Day 07\n",
 "==================\n",
 "✮: #{solve(&:itself)}\n",
 "★: #{solve{ |x| (x*(x+1)/2) }}"

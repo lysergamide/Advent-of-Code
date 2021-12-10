@@ -17,7 +17,7 @@ end
 Silver = 80.times.reduce(I) { step _1 }
 Gold   = (256 - 80).times.reduce(Silver) { step _1 }
 
-puts "Day 05\n",
+puts "Day 06\n",
 "==================\n",
 "✮: #{Silver.sum}\n",
 "★: #{Gold.sum}"
