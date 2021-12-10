@@ -1,6 +1,6 @@
 require 'set'
 
-Nums = {
+Shape = {
   0 => Set[:a, :b, :c, :e, :f, :g],
   1 => Set[:c, :f],
   2 => Set[:a, :c, :d, :e, :g],
@@ -13,49 +13,56 @@ Nums = {
   9 => Set[:a, :b, :c, :d, :f, :g],
 }
 
-NumSize   = Nums.map { [_1, _2.size] }.to_h
-SizeNums  = NumSize.group_by(&:last).map{ [_1, _2.map(&:first)] }.to_h
-SizeCount = NumSize.map{ _1.last }.tally
+Digits     = Shape.keys
+Size       = Digits.reduce(Hash.new) { |h, k| h[k] = Shape[k].size; h }
+UniqueSize = [1, 4, 7, 8].map{ Size[_1] }.to_set
 
-def parseLine(line)
-  line.split("|")
-      .map{ |side| side.split.map { _1.chars.to_set } }
-end
+def solve(line)
+  unsolved = line.to_set
+  shapeMap = Hash.new
+  used     = Set.new
 
-
-I = $<.read.chomp.lines.map{ parseLine _1 }
-
-def solveLine(input, output)
-  ls     = input.to_set
-  keyMap = Hash.new
-  done   = Set.new
-
-  output.each do |o|
-    if SizeCount[o.size] == 1
-      key = SizeNums[o.size].first
-      keyMap[o] = key
-      done << o
-    end
+  subset = ->(code) do
+    shapeMap.select{ _1 < code}
+            .map{ Shape[_2] }
+            .reduce(&:|)
   end
 
-  ls -= done
-  until ls.empty?
-    ls.each do |x|
-      candidates = SizeNums[x.size].reject { done.include? _1 }
-                                   .select {}
-      if candidates.size == 1
-        key = candidates.first
-        keyMap[x] = key
-        done << key
+  superset = ->(code) do
+    shapeMap.select{ _1 > code}
+            .min_by{ _1.first.size }
+            .then{  Shape[_2] } 
+  end
+
+  until unsolved.empty?
+
+    unsolved.each do |code|
+      digits = Digits.reject{ Size[_1] != code.size || used === _1}
+
+      unless digits.size == 1
+        subS   = subset.call(code)
+        superS = superset.call(code)
+
+        digits.select!{ Shape[_1] >= subS }   unless subS.nil?
+        digits.select!{ Shape[_1] <= superS } unless superS.nil?
+      end
+
+      if digits.size == 1
+        shapeMap[code] = digits.first
+        unsolved.delete(code)
+        used << digits.first
       end
     end
 
-    ls -= done
   end
 
-  output.map { solved[_1] }
+  line[-4..].map{ shapeMap[_1] }.reduce{ |a, b| a * 10 + b }
 end
 
-Silver = I.map(&:last)
-          .map{ |sets| sets.count { |s| SizeCount[s.size] == 1 } }
-          .sum
+I = $<.readlines(chomp: true)
+      .map{ |line| line.scan(/\w+/).map{ _1.chars.to_set } }
+
+Silver = I.map{ |line| line[-4..].count { |x| UniqueSize === x.size } }.sum
+Gold   = I.map{ solve(_1) }.sum
+
+p Silver, Gold
