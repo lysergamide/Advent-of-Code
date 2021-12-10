@@ -26,7 +26,7 @@ end
 
 Low    = Cave.keys.select{ |x| neighbors(x).all?{ Cave[x] < Cave[_1] } }
 Silver = Low.sum{ Cave[_1] + 1 }
-Gold   = Low.map{ fillBasin _1 }.sort[-3..].reduce(&:*)
+Gold   = Low.map{ fillBasin _1 }.sum(3).reduce(&:*)
 
 puts "Day 09\n",
 "==================\n",
