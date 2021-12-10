@@ -1,3 +1,6 @@
+# /user/bin/env ruby
+# frozen_string_literal: true
+
 Nums = $<.read.scan(/\d+/).map(&:to_i).sort
 
 def solve(x, &block) = Nums.map{ block[(x - _1).abs] }.sum
