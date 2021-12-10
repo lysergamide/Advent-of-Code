@@ -1,3 +1,6 @@
+# /user/bin/env ruby
+# frozen_string_literal: true
+
 require 'set'
 
 I = $<.readlines(chomp: true)
