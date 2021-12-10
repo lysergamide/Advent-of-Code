@@ -16,17 +16,22 @@ end
 
 def neighbors(x) = [1+0i, -1+0i, 0+1i, 0-1i].map{ x + _1 }
 
-def fillBasin(point, filled = Set.new)
-  return 0 if filled === point
-  neighbors(point).reject{ Cave[_1] > 8 || filled === _1 }
-                  .select{ Cave[_1] > Cave[point] }
-                  .map{ fillBasin(_1, filled << point) }
-                  .sum(1)
+def fillBasin(point)
+  sum, stack, visited = 0, [], Set.new
+
+  until stack.empty? 
+    x = stack.pop
+    next if visited === x
+    neighbors(x).select{ Cave[_1] < 9 && Cave[_1] > Cave[point] }
+                .each  { stack << _1 }
+  end
+
+  sum
 end
 
 Low    = Cave.keys.select{ |x| neighbors(x).all?{ Cave[x] < Cave[_1] } }
 Silver = Low.sum{ Cave[_1] + 1 }
-Gold   = Low.map{ fillBasin _1 }.sum(3).reduce(&:*)
+Gold   = Low.map{ fillBasin _1 }.max(3).reduce(&:*)
 
 puts "Day 09\n",
 "==================\n",
