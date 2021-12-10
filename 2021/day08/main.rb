@@ -65,7 +65,7 @@ I = $<.readlines(chomp: true)
 Silver = I.map{ |line| line[-4..].count { |x| UniqueSize === x.size } }.sum
 Gold   = I.map{ solve(_1) }.sum
 
-puts "Day 09\n",
+puts "Day 08\n",
 "==================\n",
 "✮: #{Silver}\n",
 "★: #{Gold}"
