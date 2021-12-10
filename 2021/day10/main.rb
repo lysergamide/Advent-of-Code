@@ -5,7 +5,7 @@
 Silver = nil
 Gold = nil
 
-puts "Day 09\n",
+puts "Day 10\n",
 "==================\n",
 "✮: #{Silver}\n",
 "★: #{Gold}"
