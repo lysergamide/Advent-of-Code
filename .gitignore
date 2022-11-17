@@ -9,3 +9,5 @@ Cargo.lock
 .lsp
 .cpcache
 *.ps1
+*.out
+*.o

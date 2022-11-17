@@ -16,6 +16,5 @@ fn main() {
         })
         .unwrap();
 
-    println!("{}", silver);
-    println!("{}", gold);
+    println!("{}\n{}", silver, gold);
 }

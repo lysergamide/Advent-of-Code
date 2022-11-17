@@ -24,7 +24,7 @@ class Board < Array
   def score  = self.flatten.reject{ @lots.to_set.include? _1 }.sum * @lots[-1]
 end
 
-I      = File.read("input", chomp: true).split("\n\n")
+I      = $<.read.split("\n\n")
 Lots   = I.first.split(",").map(&:to_i)
 
 boards = I[1..].map{ |b| Board.new(b.lines.map{ _1.split.map(&:to_i) }) }
