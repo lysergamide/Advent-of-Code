@@ -48,7 +48,7 @@ iter =
 Silver = iter.first.values.count "#"
 Gold = iter.drop(48).first.values.count "#"
 
-puts "Day 12\n",
+puts "Day 20\n",
      "============================\n",
      "✮: #{Silver}\n",
      "★: #{Gold}"
