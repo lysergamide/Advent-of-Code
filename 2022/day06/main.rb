@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "set"
+I = $<.each_char
 
-I = $<.read.strip
-
-def solve(n)
-  I.chars.each_cons(n).with_index.find { _1.first.uniq.size == n }.last + n
-end
+def solve(n) =
+  I.each_cons(n)
+   .with_index
+   .find { _1.first.uniq.size == n }
+   .last + n
 
 puts "Day 06\n",
      "============================\n",

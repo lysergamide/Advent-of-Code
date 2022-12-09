@@ -14,6 +14,6 @@ int main(int, char** argv)
       xs.back() += stoi(l);
 
   sort(xs.begin(), xs.end());
-  cout << xs.back() << '\n';
-  cout << reduce(xs.end() - 3, xs.end()) << '\n';
+  cout << xs.back() << '\n'
+       << reduce(xs.end() - 3, xs.end()) << '\n';
 }
